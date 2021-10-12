@@ -1,0 +1,6 @@
+name: idt-texture-analysis
+channels:
+  - defaults
+dependencies:
+  - python=3.8.11
+  - mahotas=1.4.11
