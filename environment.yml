@@ -1,6 +1,7 @@
 name: idt-texture-analysis
 channels:
-  - defaults
+  - conda-forge
 dependencies:
-  - python=3.8.11
   - mahotas=1.4.11
+  - python=3.8.11
+  - scikit-image=0.18.3
