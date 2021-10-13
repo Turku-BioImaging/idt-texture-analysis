@@ -6,3 +6,4 @@ dependencies:
   - python=3.8.11
   - scikit-image=0.18.3
   - tqdm=4.62.3
+  - black
