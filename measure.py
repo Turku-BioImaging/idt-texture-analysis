@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 from glob import glob
 from tqdm import tqdm
-
 from skimage import io, measure
 
 import texture
@@ -35,7 +34,7 @@ data = []
 
 print(f"\nAnalyzing a total of [ {len(img_paths) } ] images...\n")
 
-for index, path in tqdm(enumerate(img_paths)):
+for index, path in tqdm(enumerate(img_paths), total=len(img_paths)):
 
     img = io.imread(path)
     mask = io.imread(mask_paths[index])
@@ -43,7 +42,7 @@ for index, path in tqdm(enumerate(img_paths)):
     assert np.ndim(img) == 2, "Image dimensions are incorrect. 2D image expected."
     assert np.ndim(mask) == 2, "Mask dimensions are incorrect. 2D mask expected."
 
-    img_name = path.replace("data/", "")
+    img_name = path.replace("images/", "")
 
     features = texture.haralick(img, mask)
     features["image_filename"] = img_name
