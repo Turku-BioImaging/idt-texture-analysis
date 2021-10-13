@@ -9,7 +9,8 @@ from skimage import io, measure
 import texture
 
 # Banner message
-print("""
+print(
+    """
 ##################################################      
 --------------------------------------------------
 
@@ -22,12 +23,13 @@ Turku BioImaging - Image Data Team
     
 --------------------------------------------------
 ##################################################
-""")
+"""
+)
 
-img_paths = sorted(glob('images/*'))
-mask_paths = sorted(glob('masks/*'))
+img_paths = sorted(glob("images/*"))
+mask_paths = sorted(glob("masks/*"))
 
-assert len(img_paths) == len(mask_paths), 'Image and mask counts do not match.'
+assert len(img_paths) == len(mask_paths), "Image and mask counts do not match."
 
 data = []
 
@@ -37,35 +39,37 @@ for index, path in tqdm(enumerate(img_paths)):
 
     img = io.imread(path)
     mask = io.imread(mask_paths[index])
-    
-    assert np.ndim(img) == 2, 'Image dimensions are incorrect. 2D image expected.'
-    assert np.ndim(mask) == 2, 'Mask dimensions are incorrect. 2D mask expected.'
-    
-    img_name = path.replace('data/', '')
-    
+
+    assert np.ndim(img) == 2, "Image dimensions are incorrect. 2D image expected."
+    assert np.ndim(mask) == 2, "Mask dimensions are incorrect. 2D mask expected."
+
+    img_name = path.replace("data/", "")
+
     features = texture.haralick(img, mask)
-    features['image_filename'] = img_name
-    
+    features["image_filename"] = img_name
+
     data.append(features)
 
 
 # convert to pandas dataframe and export to csv
 df = pd.DataFrame(data)
 columns = list(df)
-columns.insert(0, columns.pop(columns.index('image_filename')))
+columns.insert(0, columns.pop(columns.index("image_filename")))
 
 df = df.loc[:, columns]
 
-if os.path.isdir('results') == False:
-    os.mkdir('results')
+if os.path.isdir("results") == False:
+    os.mkdir("results")
 else:
-    for path in glob('results/*'):
+    for path in glob("results/*"):
         os.remove(path)
 
-df.to_csv('results/results.csv')
+df.to_csv("results/results.csv")
 
-print("""
+print(
+    """
       
 Texture analysis complete. Results have been saved to the results directory.
 
-""")
+"""
+)
