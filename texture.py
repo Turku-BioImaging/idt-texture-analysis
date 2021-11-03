@@ -45,7 +45,7 @@ def haralick(image: np.ndarray, mask: np.ndarray):
 
     # get haralick features using mahotas
     features = mahotas.features.haralick(
-        props[0]["intensity_image"], distance=1, ignore_zeros=True
+        props[0]["intensity_image"], distance=5, ignore_zeros=True
     )
 
     # loop through the 2D array of 4 directions * 13 features

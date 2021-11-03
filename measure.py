@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from glob import glob
 from tqdm import tqdm
-from skimage import io, measure
+from skimage import io, measure, img_as_ubyte
 
 import texture
 
@@ -36,7 +36,7 @@ print(f"\nAnalyzing a total of [ {len(img_paths) } ] images...\n")
 
 for index, path in tqdm(enumerate(img_paths), total=len(img_paths)):
 
-    img = io.imread(path)
+    img = img_as_ubyte(io.imread(path))
     mask = io.imread(mask_paths[index])
 
     assert np.ndim(img) == 2, "Image dimensions are incorrect. 2D image expected."
