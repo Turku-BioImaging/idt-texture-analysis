@@ -25,8 +25,8 @@ Turku BioImaging - Image Data Team
 """
 )
 
-img_paths = sorted(glob("images/*"))
-mask_paths = sorted(glob("masks/*"))
+img_paths = sorted(set(glob("data/*")) - set(glob("data/*_mask.*")))
+mask_paths = sorted(glob("data/*_mask.*"))
 
 assert len(img_paths) == len(mask_paths), "Image and mask counts do not match."
 
@@ -44,7 +44,7 @@ for index, path in tqdm(enumerate(img_paths), total=len(img_paths)):
 
     img_name = path.replace("images/", "")
 
-    features = texture.haralick(img, mask)
+    features = texture.haralick(img, mask, distance=5)
     features["image_filename"] = img_name
 
     data.append(features)
@@ -67,7 +67,7 @@ df.to_csv("results/results.csv")
 
 print(
     """
-      
+
 Texture analysis complete. Results have been saved to the results directory.
 
 """

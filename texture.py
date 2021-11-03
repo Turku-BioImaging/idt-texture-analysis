@@ -19,7 +19,7 @@ __HARALICK_FEATURES = [
 ]
 
 
-def haralick(image: np.ndarray, mask: np.ndarray):
+def haralick(image: np.ndarray, mask: np.ndarray, distance=5):
     """
     Takes a 2D image and mask and returns the 4-directional average of each of the 13 Haralick features.
 
@@ -45,7 +45,7 @@ def haralick(image: np.ndarray, mask: np.ndarray):
 
     # get haralick features using mahotas
     features = mahotas.features.haralick(
-        props[0]["intensity_image"], distance=5, ignore_zeros=True
+        props[0]["intensity_image"], distance=distance, ignore_zeros=True
     )
 
     # loop through the 2D array of 4 directions * 13 features
