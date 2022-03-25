@@ -1,6 +1,6 @@
 # Image Texture Analysis Module
 
-This module accepts a 2D image and its corresponding mask and measures the 13 Haralick features. Each feature measurement is averaged across four directions (0°, 45°, 90°, and 135°) for rotational invariance.
+This module accepts a 2D or 3D image and its corresponding mask and measures the 13 Haralick features. Each feature measurement is averaged across four directions (0°, 45°, 90°, and 135°) for 2D images, and 13 directions for 3D images, for rotational invariance.
 
 The module is packaged into a Docker container image published at the [TBI-IDAT Container Repository](https://github.com/Turku-BioImaging/idt-texture-analysis/pkgs/container/idt-texture-analysis)
 
@@ -12,14 +12,14 @@ The container image is private at the moment, so it is not available to the publ
 
 ### Expected Inputs
 
-**Images** are expected to be 2-dimensional 8-bit images. They should be placed in a directory called **images** directly under the root directory of this project.
+**Images** are expected to be 2- or 3-dimensional 8-bit images. They should be placed in a directory called **images** directly under the root directory of this project.
 
-**Masks** are exptected to be 2-dimensional 8-bit images. They should be placed in a directory called **images** directly under the root directory of this project.
+**Masks** are exptected to be 2- or 3-dimensional 8-bit images. They should be placed in a directory called **masks** directly under the root directory of this project.
 
 **!!! IMPORTANT !!!**  
 The images and their corresponding masks are sorted alphabetically by the module. Please make sure that the images and masks are in the same position within their folders. For example, if **image_3.tif** is the third file in **images**, then its **mask_3.tif** must be also the third file in **masks**. Otherwise, the output results will be INCORRECT.
 
-When executed, this module will check that each image has **dimensions == 2** and that the number of images in the **images** directory is equal to the number of masks in the **masks** directory. If these conditions are not met, the module will stop and print an error message.
+When executed, this module will check that each image has equal dimensions to the corresponding mask and that the number of images in the **images** directory is equal to the number of masks in the **masks** directory. If these conditions are not met, the module will stop and print an error message.
 
 ### Run analysis
 
