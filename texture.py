@@ -21,19 +21,19 @@ __HARALICK_FEATURES = [
 
 def haralick(image: np.ndarray, mask: np.ndarray, distance=5):
     """
-    Takes a 2D image and mask and returns the 4-directional average of each of the 13 Haralick features.
+    Takes a n-d image and mask and returns the 4-directional (2D images) or 13-directional (3D images) average of each of the 13 Haralick features.
 
     Parameters
     ----------
     image: ndarray
-        2-dimensional ndarray
+        n-dimensional ndarray
     mask: ndarray
-        2-dimensional ndarray
+        n-dimensional ndarray
 
     Returns
     -------
     feature_averages:
-        A dictionary containing the 4-directional averages of each Haralick feature.
+        A dictionary containing the directional averages of each Haralick feature.
     """
 
     image[~mask] = 0
