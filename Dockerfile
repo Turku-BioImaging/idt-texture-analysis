@@ -1,4 +1,4 @@
-FROM continuumio/miniconda3:4.10.3-alpine
+FROM continuumio/miniconda3:4.10.3p0-alpine
 
 LABEL org.opencontainers.image.authors="Junel Solis, Image Data Team, Turku BioImaging"
 LABEL org.opencontainers.image.url="https://bioimaging.fi"
