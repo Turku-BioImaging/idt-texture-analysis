@@ -1,0 +1,10 @@
+name: base
+channels:
+  - conda-forge
+dependencies:
+  - python=3.9
+  - mahotas=1.4.11
+  - scikit-image=0.19.1
+  - tqdm
+  - black
+  - pandas=1.3.3
