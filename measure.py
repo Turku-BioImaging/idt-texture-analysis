@@ -54,10 +54,10 @@ def _get_features(
     c1_fname = os.path.basename(path).replace(".tif", "_c1.tif")
     c2_fname = os.path.basename(path).replace(".tif", "_c2.tif")
 
-    features_c1 = texture.haralick(channel_1, mask, distance=5)
+    features_c1 = texture.haralick(channel_1, mask, distance)
     features_c1["image_filename"] = c1_fname
 
-    features_c2 = texture.haralick(channel_2, mask, distance=5)
+    features_c2 = texture.haralick(channel_2, mask, distance)
     features_c2["image_filename"] = c2_fname
 
     return features_c1, features_c2
