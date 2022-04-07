@@ -33,11 +33,6 @@ def print_banner():
     )
 
 
-def _configure_results_dir():
-    shutil.rmtree(RESULTS_DIR, ignore_errors=True)
-    os.makedirs(RESULTS_DIR)
-
-
 def _get_features(
     img: np.ndarray, mask: np.ndarray, distance: int = 5, mode: str = "max"
 ):
@@ -74,7 +69,6 @@ def _save_data_to_file(data: List, fname: str):
 
 if __name__ == "__main__":
     print_banner()
-    _configure_results_dir()
 
     img_paths = sorted(glob(f"{IMG_DIR}/*"))
     mask_paths = sorted(glob(f"{MASK_DIR}/*"))
