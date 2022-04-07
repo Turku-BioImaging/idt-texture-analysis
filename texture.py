@@ -42,7 +42,7 @@ def haralick(image: np.ndarray, mask: np.ndarray, distance=5, mode: str = "max")
         mask = np.max(mask, axis=0)
     if mode == "avg":
         image = np.mean(image, axis=0)
-        mask = np.mean(mask, axis=0)
+        mask = np.max(mask, axis=0)
 
     image[~mask] = 0
     props = measure.regionprops(mask, image)
