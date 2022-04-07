@@ -2,7 +2,7 @@ import numpy as np
 import mahotas
 from skimage import measure
 
-__HARALICK_FEATURES = [
+HARALICK_FEATURES = [
     "angular_second_moment",
     "contrast",
     "correlation",
@@ -19,7 +19,7 @@ __HARALICK_FEATURES = [
 ]
 
 
-def haralick(image: np.ndarray, mask: np.ndarray, distance=5):
+def haralick(image: np.ndarray, mask: np.ndarray, distance=5, mode: str = "max"):
     """
     Takes a n-d image and mask and returns the 4-directional (2D images) or 13-directional (3D images) average of each of the 13 Haralick features.
 
@@ -36,8 +36,15 @@ def haralick(image: np.ndarray, mask: np.ndarray, distance=5):
         A dictionary containing the directional averages of each Haralick feature.
     """
 
-    image[~mask] = 0
+    # image[~mask] = 0
+    if mode == "max":
+        image = np.max(image, axis=0)
+        mask = np.max(mask, axis=0)
+    if mode == "avg":
+        image = np.mean(image, axis=0)
+        mask = np.mean(mask, axis=0)
 
+    image[~mask] = 0
     props = measure.regionprops(mask, image)
 
     # sanity check to make sure there is only one prop to deal with
@@ -52,8 +59,8 @@ def haralick(image: np.ndarray, mask: np.ndarray, distance=5):
     # get averages for each feature
     feature_averages = {}
 
-    for index in range(len(__HARALICK_FEATURES)):
-        feature_averages[__HARALICK_FEATURES[index]] = np.mean(
+    for index in range(len(HARALICK_FEATURES)):
+        feature_averages[HARALICK_FEATURES[index]] = np.mean(
             [features[i][index] for i in range(4)]
         )
 
