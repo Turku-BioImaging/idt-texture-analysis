@@ -1,4 +1,4 @@
-FROM continuumio/miniconda3:4.10.3p0-alpine
+FROM mambaorg/micromamba:0.20.0
 
 LABEL org.opencontainers.image.authors="Junel Solis, Image Data Team, Turku BioImaging"
 LABEL org.opencontainers.image.url="https://bioimaging.fi"
@@ -7,17 +7,10 @@ LABEL org.opencontainers.image.title="Image Texture Analysis"
 
 WORKDIR /code
 
-RUN addgroup -S pythonuser && adduser -S pythonuser -G pythonuser \
-    && chown -R pythonuser:pythonuser /opt/conda 
-
+COPY --chown=$MAMBA_USER:$MAMBA_USER ./environment-docker.yml /tmp/env.yml
 COPY environment.yml measure.py texture.py /code/
-RUN chmod o=rx environment.yml measure.py texture.py
 
-USER pythonuser
-
-RUN conda env create -f environment.yml && conda clean --all
-
-ENV PATH /opt/conda/envs/idt-texture-analysis/bin:$PATH
-RUN /bin/bash -c "source activate idt-texture-analysis"
+RUN micromamba install -y -f /tmp/env.yml \
+    && micromamba clean --all --yes
 
 CMD [ "python", "measure.py" ]
