@@ -90,26 +90,3 @@ if __name__ == "__main__":
         data.append(features_c2)
 
     _save_data_to_file(data, "texture_5px_max")
-
-    # # measure texture with 5 px distance and average intensity projection
-    # print(f"\nAnalyzing {len(img_paths)} images using average intensity...\n")
-    # data = []
-    # for index, path in tqdm(enumerate(img_paths), total=len(img_paths)):
-
-    #     img = img_as_ubyte(io.imread(path))
-    #     mask = io.imread(mask_paths[index])
-
-    #     features_c1, features_c2 = _get_features(img, mask, distance=1, mode="avg")
-
-    #     data.append(features_c1)
-    #     data.append(features_c2)
-
-    # _save_data_to_file(data, "texture_1px_avg")
-
-    # print(
-    #     """
-
-    # Texture analysis complete. Results have been saved to the results directory.
-
-    # """
-    # )
