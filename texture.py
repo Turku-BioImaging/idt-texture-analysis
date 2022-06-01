@@ -39,7 +39,7 @@ def haralick(image: np.ndarray, mask: np.ndarray, distance=5, mode: str = "max")
     # image[~mask] = 0
     if mode == "max":
         image = np.max(image, axis=0)
-        mask = np.max(mask, axis=0)
+        # mask = np.max(mask, axis=0)
     if mode == "avg":
         image = np.mean(image, axis=0).astype(np.uint8)
         mask = np.max(mask, axis=0)
