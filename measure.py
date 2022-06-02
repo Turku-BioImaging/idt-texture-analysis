@@ -43,37 +43,27 @@ def _get_features(
     c1_fname = os.path.basename(path).replace(".tif", "_c1.tif")
     c2_fname = os.path.basename(path).replace(".tif", "_c2.tif")
 
-    if _is_label_image(mask):
-        labels = _get_labels_from_mask(mask)
-        data = []
+    labels = _get_labels_from_mask(mask)
+    data = []
 
-        for idx, l in enumerate(labels):
-            label = l.astype(np.uint8)
+    for idx, l in enumerate(labels):
+        label = l.astype(np.uint8)
 
-            features_c1 = texture.haralick(channel_1, label, distance, mode=mode)
-            features_c1["image_filename"] = c1_fname
-            features_c1["cell_id"] = idx + 1
-            data.append(features_c1)
+        features_c1 = texture.haralick(channel_1, label, distance, mode=mode)
+        features_c1["image_filename"] = c1_fname
+        features_c1["cell_id"] = idx + 1
+        data.append(features_c1)
 
-            features_c2 = texture.haralick(channel_2, label, distance, mode=mode)
-            features_c2["image_filename"] = c2_fname
-            features_c2["cell_id"] = idx + 1
+        features_c2 = texture.haralick(channel_2, label, distance, mode=mode)
+        features_c2["image_filename"] = c2_fname
+        features_c2["cell_id"] = idx + 1
 
-            data.append(features_c2)
+        data.append(features_c2)
 
-        return data
-
-
-def _is_label_image(mask: np.ndarray) -> bool:
-    count = len(np.unique(mask))
-    if count > 2:
-        return True
-    else:
-        return False
+    return data
 
 
 def _get_labels_from_mask(mask: np.ndarray) -> list:
-    assert _is_label_image(mask)
 
     labels = []
 
@@ -114,11 +104,21 @@ if __name__ == "__main__":
         img = img_as_ubyte(io.imread(path))
         mask = io.imread(mask_paths[index])
 
-        # features_c1, features_c2 = _get_features(img, mask, distance=5, mode="max")
         features = _get_features(img, mask, distance=5, mode="max")
-        [data.append(f) for f in features]
-
-        # data.append(features_c1)
-        # data.append(features_c2)
+        if len(features) > 0:
+            [data.append(f) for f in features]
 
     _save_data_to_file(data, "texture_5px_max")
+
+    # measure texture with 1px distance and MIP
+    data = []
+    for index, path in tqdm(enumerate(img_paths), total=len(img_paths)):
+
+        img = img_as_ubyte(io.imread(path))
+        mask = io.imread(mask_paths[index])
+
+        features = _get_features(img, mask, distance=1, mode="max")
+        if len(features) > 0:
+            [data.append(f) for f in features]
+
+    _save_data_to_file(data, "texture_1px_max")
