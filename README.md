@@ -1,3 +1,6 @@
+
+<img src="images\BioImaging_logo_posa_vaaka.jpg" alt="drawing" width="400"/>
+
 # Image Texture Analysis Module
 
 This module accepts a 2D or 3D image and its corresponding mask and measures the 13 Haralick features. Each feature measurement is averaged across four directions (0°, 45°, 90°, and 135°) for 2D images, and 13 directions for 3D images, for rotational invariance.
